@@ -1,0 +1,6 @@
+framework module Pods_NERiOS {
+  umbrella header "Pods-NERiOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
