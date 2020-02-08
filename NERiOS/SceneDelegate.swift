@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  NERiOS
 //
-//  Created by José Jiménez Asensio on 04/01/2020.
+//  Created by José Jiménez Asensio on 04/12/2019.
 //  Copyright © 2020 José Jiménez Asensio. All rights reserved.
 //
 
