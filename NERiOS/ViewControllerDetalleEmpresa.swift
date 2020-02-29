@@ -30,11 +30,9 @@ class ViewControllerDetalleEmpresa: UIViewController
     
     override func viewDidLoad()
     {
+        //según cargamos la view vamos a comenzar a rellenar todos los datos de la empresa, para ello necesitamos el uid que hemos recuperado del view anterior
         super.viewDidLoad()
-        //print (uid)
         guard let userID = Auth.auth().currentUser?.uid else { return }
-        
-        //let uid = Auth.auth().currentUser?.uid
         let mail = Auth.auth().currentUser?.email
         
         let parentRef = Database.database().reference().child("Empresa").child(uid)
@@ -44,15 +42,22 @@ class ViewControllerDetalleEmpresa: UIViewController
             let ciudad = dic["ciudad"] as? String ?? ""
             let provincia = dic["provincia"] as? String ?? ""
             let telefono = dic["telf"] as? String ?? ""
-            //nombre, provincia, ciudad,telefono,lat,lon,mail,facebook,web
+            let latitud = dic["latitud"] as? Double ?? 0.0
+            let longitud = dic["longitud"] as? Double ?? 0.0
+            
             self.lbl_nombreEmp.text=nombre
             self.lbl_ciudad.text=ciudad
             self.lbl_provincia.text=provincia
             self.lbl_telefono.text=telefono
-            
-            print (snapshot.key)
+            //con los siguientes datos cargamos el mapa, con sus coordenadas y la distancia de visión del mapa y el marcador deposición del destino
+            let x = CLLocation(latitude: latitud, longitude: longitud)
+            let region = MKCoordinateRegion(center: x.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+            self.MKempresa.setRegion(region, animated: true)
+            let anotacion = MKPointAnnotation()
+            let posicionAnotacion = CLLocationCoordinate2D(latitude: latitud, longitude: longitud)
+            anotacion.title = nombre
+            anotacion.coordinate = posicionAnotacion
+            self.MKempresa.addAnnotation(anotacion)
          })
     }
-    
-
 }
