@@ -35,6 +35,15 @@ class ViewControllerEmpresas: UIViewController, UITableViewDelegate, UITableView
         let empresa: EmpresaModel
         empresa = empresas[indexPath.row]
         
+        if let url = NSURL(string:empresa.foto)
+        {
+            if let data = NSData(contentsOf: url as URL)
+            {
+                celda.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
+                celda.imageView?.image = UIImage(data: data as Data)
+                celda.imageView?.scalesLargeContentImage=true
+            }
+        }
         celda.lbl_nombre.text = empresa.nombre
         celda.lbl_ciudad.text = empresa.ciudad
         celda.lbl_provincia.text = empresa.provincia
@@ -84,12 +93,14 @@ class ViewControllerEmpresas: UIViewController, UITableViewDelegate, UITableView
                     let empresaUid = objEmpresa?["uid"]
                     let empresaLat = objEmpresa?["latitud"]
                     let empresaLon = objEmpresa?["longitud"]
+                    let empresaFoto = objEmpresa?["foto"]
                     if(self.opcion == 3)
                     {
                         let empresaDato = EmpresaModel(uid: empresaUid as! String,
                                                        nombre: empresaNombre as! String,
                                                        ciudad: empresaCiudad as! String,
-                                                       provincia: empresaProvincia as! String)
+                                                       provincia: empresaProvincia as! String,
+                                                       foto: empresaFoto as! String)
                         
                         self.empresas.append(empresaDato)
                     }
@@ -100,7 +111,8 @@ class ViewControllerEmpresas: UIViewController, UITableViewDelegate, UITableView
                             let empresaDato = EmpresaModel(uid: empresaUid as! String,
                                                            nombre: empresaNombre as! String,
                                                            ciudad: empresaCiudad as! String,
-                                                           provincia: empresaProvincia as! String)
+                                                           provincia: empresaProvincia as! String,
+                                                           foto: empresaFoto as! String)
                             
                             self.empresas.append(empresaDato)
                             }
@@ -112,7 +124,8 @@ class ViewControllerEmpresas: UIViewController, UITableViewDelegate, UITableView
                         let empresaDato = EmpresaModel(uid: empresaUid as! String,
                                                        nombre: empresaNombre as! String,
                                                        ciudad: empresaCiudad as! String,
-                                                       provincia: empresaProvincia as! String)
+                                                       provincia: empresaProvincia as! String,
+                                                       foto: empresaFoto as! String)
                         
                         self.empresas.append(empresaDato)
                         }
@@ -125,7 +138,8 @@ class ViewControllerEmpresas: UIViewController, UITableViewDelegate, UITableView
                         let empresaDato = EmpresaModel(uid: empresaUid as! String,
                                                        nombre: empresaNombre as! String,
                                                        ciudad: empresaCiudad as! String,
-                                                       provincia: empresaProvincia as! String)
+                                                       provincia: empresaProvincia as! String,
+                                                       foto: empresaFoto as! String)
                         
                         self.empresas.append(empresaDato)
                         }

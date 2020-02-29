@@ -14,6 +14,7 @@ class TableViewCellEmpresa: UITableViewCell {
     @IBOutlet weak var lbl_ciudad: UILabel!
     @IBOutlet weak var lbl_provincia: UILabel!
     @IBOutlet weak var lbl_uid: UILabel!
+    @IBOutlet weak var img_empresa: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

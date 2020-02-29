@@ -5,6 +5,7 @@
 //  Created by José Jiménez Asensio on 18/01/2020.
 //  Copyright © 2020 José Jiménez Asensio. All rights reserved.
 //
+// el modelo dedatos con la información básica de lo que se necesita mostrar
 
 import Foundation
 
@@ -15,12 +16,14 @@ class EmpresaModel
     var nombre: String
     var ciudad: String
     var provincia :String
-    init(uid: String, nombre: String, ciudad : String,provincia:String)
+    var foto: String
+    init(uid: String, nombre: String, ciudad : String,provincia:String, foto:String)
     {
         self.uid = uid
         self.nombre = nombre
         self.ciudad = ciudad
         self.provincia=provincia
+        self.foto=foto
     }
 }
 

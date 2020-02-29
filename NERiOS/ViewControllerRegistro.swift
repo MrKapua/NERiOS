@@ -17,6 +17,7 @@ class ViewControllerRegistro: UIViewController, UITextFieldDelegate , UIPickerVi
     @IBOutlet weak var lbl_mail: UITextField!
     @IBOutlet weak var lbl_pass: UITextField!
     var provincia = ""
+    // todas las provincias para meter en el picker
     let pickerProvincias = ["Álava","Albacete","Alicante","Almería","Asturias","Ávila","Badajoz","Baleares","Barcelona","Burgos","Cáceres","Cádiz","Cantabria","Castellón","Ceuta","Ciudad Real","Córdoba","Cuenca","Gerona","Granada","Guadalajara","Guipúzcoa","Huelva","Huesca","Jaén","La Coruña","La Rioja","Las Palmas","León","Lérida","Lugo","Madrid","Málaga","Melilla","Murcia","Navarra","Orense","Palencia","Pontevedra","Salamanca","Santa Cruz de Tenerife","Segovia","Sevilla","Soria","Tarragona","Teruel","Toledo","Valencia","Valladolid","Vizcaya","Zamora","Zaragoza"]
     
     override func viewDidLoad()
@@ -27,6 +28,7 @@ class ViewControllerRegistro: UIViewController, UITextFieldDelegate , UIPickerVi
         //por si hay una sesión abierta, la tratamos de cerrar
         try! Auth.auth().signOut()
     }
+    
     //Volvemos a la pantalla principal, cancelando todo lo que hemos hecho
     @IBAction func btn_cancelar(_ sender: Any)
     {
@@ -42,11 +44,10 @@ class ViewControllerRegistro: UIViewController, UITextFieldDelegate , UIPickerVi
         //vamos a necesitar todos los campos rellenos, si o si
         if(lbl_nombre!.text!.isEmpty || lbl_apellido!.text!.isEmpty || lbl_mail!.text!.isEmpty || lbl_pass!.text!.isEmpty)
         {
-            MostrarToast(mensaje: "Faltan datosFaltan datosFaltan datosFaltan datos")
+            MostrarToast(mensaje: "Tienes que rellenar todos los campos")
         }
         else
         {
-            print (provincia)
             //con el siguiente conjunto de lineas vamos a crear el usuario para Authenticator
              Auth.auth().createUser(withEmail: lbl_mail.text!, password: lbl_pass.text!){ authResult, error in}
              var ref: DatabaseReference!
@@ -58,10 +59,7 @@ class ViewControllerRegistro: UIViewController, UITextFieldDelegate , UIPickerVi
              ref.child("Usuario/\(user)/apellido").setValue(lbl_apellido.text)
              ref.child("Usuario/\(user)/provincia").setValue(provincia)
              ref.child("Usuario/\(user)/uid").setValue(user)
-            
         }
-        
-        
     }
     
     @objc func ocultarTeclado() {
@@ -84,9 +82,10 @@ class ViewControllerRegistro: UIViewController, UITextFieldDelegate , UIPickerVi
         }
         return false
     }
+    
+    //función para poder mostrar el Toast en esta pantalla
     func MostrarToast(mensaje : String)
     {
-
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 140, y: self.view.frame.size.height-100, width: 280, height: 35))
         toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         toastLabel.textColor = UIColor.white
@@ -102,20 +101,25 @@ class ViewControllerRegistro: UIViewController, UITextFieldDelegate , UIPickerVi
             }, completion: {(isCompleted) in
             toastLabel.removeFromSuperview()})
     }
+    
+    //vamos a mostrar un elemento por celda
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    //el picker se rellena con el contenido de las provincias en cada celda
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerProvincias[row]
     }
+    
+    //con esta función registramos el número de componentes que va a contener el picker
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerProvincias.count
     }
     
+    //Cuando se selecciona un elemento del picker se guardar lo seleccionado en una variable definia previamente
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         provincia = pickerProvincias[row]
-        print (provincia)
     }
     
     func volverLogin()

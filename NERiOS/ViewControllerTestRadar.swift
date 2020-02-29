@@ -71,29 +71,17 @@ class ViewControllerTestRadar: UIViewController, CLLocationManagerDelegate, MKMa
             
             MkMapa.setRegion(region, animated: true)
             
-            
-            
-            
-            
-            
             punto1 = CLLocation(latitude: lat!, longitude: alt!)
-            //punto2 = CLLocation(latitude: 40.0559016, longitude: -6.042097)
-            //punto2 = CLLocation(latitude: 37.785833, longitude: -122.406417)
-            
         }
-        
-        
     }
 
     @IBAction func btn_calcularDistancia(_ sender: Any)
     {
-        
         let DistanciaEnMetros = punto1.distance(from: punto2)
         print (DistanciaEnMetros)
         //lbl_resultado.text = "\(DistanciaEnMetros)"
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         guard let destino = storyboard.instantiateViewController(withIdentifier: "listaEmpresaS") as? ViewControllerEmpresas else{return}
-        //destino.nombre=cell.lbl_ciudad.text!
         destino.opcion=4
         destino.punto1=punto1
         
@@ -104,11 +92,9 @@ class ViewControllerTestRadar: UIViewController, CLLocationManagerDelegate, MKMa
     }
     
     func alertLocation(tit: String, men: String) {
-        
         let alerta = UIAlertController(title: tit, message: men, preferredStyle: .alert)
         let action = UIAlertAction(title: "Aceptar", style: .default, handler: nil)
         alerta.addAction(action)
         self.present(alerta, animated: true, completion: nil)
     }
-    
 }

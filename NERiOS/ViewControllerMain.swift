@@ -21,6 +21,7 @@ class ViewControllerMain: UIViewController
     {
         super.viewDidLoad()
         cargarBasico()
+        //En las siguientes lineas se define la forma del botón
         btn_princCiudades.layer.cornerRadius = 20.0
         btn_princCiudades.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMaxYCorner]
         btn_radar.layer.cornerRadius = 20.0
@@ -29,8 +30,8 @@ class ViewControllerMain: UIViewController
         btn_busqueda.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMaxYCorner]
         btn_personal.layer.cornerRadius = 20.0
         btn_personal.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMaxYCorner]
-        
     }
+    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
@@ -49,8 +50,9 @@ class ViewControllerMain: UIViewController
     public func cargarBasico()
     {
         guard let userID = Auth.auth().currentUser?.uid else { return }
-        
+        //obtenemos el uid
         let uid = Auth.auth().currentUser?.uid
+        //se crea la referencia con la que obtendremos datos, en este caso el nombre del usuario registrado
         let parentRef = Database.database().reference().child("Usuario").child(uid!)
         parentRef.observeSingleEvent(of: .value, with: {snapshot in
             let dic = snapshot.value as! [String:  Any]
